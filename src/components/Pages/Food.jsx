@@ -304,10 +304,10 @@ const Food = () => {
               </div>
             </div>
             
-            {filteredItems?.length === 0 || foodItemsError?.length > 0 ? (
+            {(filteredItems?.length === 0) || (foodItemsError?.length > 0) ? (
               <div className="text-center py-8">
                 <p className="text-gray-500">{foodItemsError?.length > 0 ? foodItemsError :'No menu items found'}</p>
-                { !foodItemsError?.length > 0 && <Button 
+                {!(foodItemsError?.length > 0) && <Button 
                   variant="outline" 
                   size="sm" 
                   onClick={handleAddNew}
