@@ -50,7 +50,7 @@ const FeedbackList = ({
     { value: 'no', label: 'Would Not Recommend' },
   ];
   
-  const filteredFeedbacks = feedbacks.filter(feedback => {
+  const filteredFeedbacks = feedbacks?.filter(feedback => {
     if (statusFilter !== 'all' && feedback.status !== statusFilter) {
       return false;
     }
@@ -75,11 +75,11 @@ const FeedbackList = ({
   });
   
   // Sort by rating (highest first) and then by creation date
-  const sortedFeedbacks = [...filteredFeedbacks].sort((a, b) => {
-    const ratingDiff = b.rating - a.rating;
+  const sortedFeedbacks = [...(filteredFeedbacks || [])].sort((a, b) => {
+    const ratingDiff = (b.rating || 0) - (a.rating || 0);
     if (ratingDiff !== 0) return ratingDiff;
     
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
   });
 
   const renderStars = (rating) => {
@@ -157,7 +157,7 @@ const FeedbackList = ({
           />
         </div>
         <div className="text-sm text-gray-600">
-          {filteredFeedbacks.length} {filteredFeedbacks.length === 1 ? 'feedback' : 'feedbacks'} found
+          {filteredFeedbacks?.length || 0} {(filteredFeedbacks?.length || 0) === 1 ? 'feedback' : 'feedbacks'} found
         </div>
       </div>
       
@@ -198,21 +198,21 @@ const FeedbackList = ({
                   <div className="text-sm font-medium text-gray-900">{feedback.customerName}</div>
                   <div className="text-sm text-gray-500">{feedback.customerEmail}</div>
                   {feedback.orderNumber && (
-                    <div className="text-xs text-gray-400">Order: {feedback.orderNumber.substring(0, 8)}...</div>
+                    <div className="text-xs text-gray-400">Order: {feedback.orderNumber.substring ? feedback.orderNumber.substring(0, 8) : feedback.orderNumber}...</div>
                   )}
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap">
                   <div className="flex items-center space-x-1">
-                    {renderStars(feedback.rating)}
+                    {renderStars(feedback.rating || 0)}
                   </div>
-                  <div className="text-sm text-gray-500">{feedback.rating}/5</div>
+                  <div className="text-sm text-gray-500">{feedback.rating || 0}/5</div>
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap">
-                  <FeedbackCategoryBadge category={feedback.category} />
+                  <FeedbackCategoryBadge category={feedback.category || 'N/A'} />
                 </td>
                 <td className="px-4 py-4">
                   <div className="text-sm text-gray-900 max-w-xs truncate">
-                    {feedback.description}
+                    {feedback.description || 'No description'}
                   </div>
                   {feedback.suggestions && (
                     <div className="text-xs text-gray-500 max-w-xs truncate mt-1">
@@ -237,10 +237,10 @@ const FeedbackList = ({
                 </td> */}
                 <td className="px-4 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">
-                    {convertSecondsToDate(feedback.createdAt._seconds)}
+                    {feedback.createdAt?._seconds ? convertSecondsToDate(feedback.createdAt._seconds) : 'N/A'}
                   </div>
                   <div className="text-sm text-gray-500">
-                    {secondsToHms(feedback.createdAt._seconds)}
+                    {feedback.createdAt?._seconds ? secondsToHms(feedback.createdAt._seconds) : 'N/A'}
                   </div>
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -274,7 +274,7 @@ const FeedbackList = ({
               </tr>
             ))}
             
-            {sortedFeedbacks.length === 0 && (
+            {sortedFeedbacks?.length === 0 && (
               <tr>
                 <td colSpan={8} className="px-4 py-4 text-sm text-gray-500 text-center">
                   No customer feedbacks found
