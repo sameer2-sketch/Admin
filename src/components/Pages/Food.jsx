@@ -61,11 +61,11 @@ const Food = () => {
 
   useEffect(() => {
     foodItems && handleFilters(foodItems)
-  }, [categoryFilter, foodItems, handleFilters])
+  }, [categoryFilter])
   
   useEffect(() => {
     foodItems && handleFilters(foodItems)
-  }, [availabilityFilter, foodItems, handleFilters])
+  }, [availabilityFilter])
 
   const handleFilters = (data) => {
     const filteredItems = data?.filter(item => {
