@@ -4,6 +4,5 @@
   "outputDirectory": "build",
   "env": {
     "SKIP_ENV_VALIDATION": "true"
-  },
-  "nodeVersion": "18.x"
+  }
 }
