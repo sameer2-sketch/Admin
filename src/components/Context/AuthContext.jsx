@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
                 idToken: user?.user?.stsTokenManager?.accessToken,
                 refreshToken: user?.user?.stsTokenManager?.refreshToken
             }
-            const res = await fetch(`https://tasteflowbackend.onrender.com/api/v1/user/login`, {
+            const res = await fetch(`https://backend-i2v9.onrender.com/api/v1/user/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ export const AuthProvider = ({ children }) => {
                 idToken: user?.user?.stsTokenManager?.accessToken,
                 refreshToken: user?.user?.stsTokenManager?.refreshToken,
             }
-            const res = await fetch(`https://tasteflowbackend.onrender.com/api/v1/user/register`, {
+            const res = await fetch(`https://backend-i2v9.onrender.com/api/v1/user/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

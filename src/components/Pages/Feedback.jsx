@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const Feedback = () => {
   
-  let apiUrl = 'https://tasteflowbackend.onrender.com/api/v1/feedback';
+  let apiUrl = 'https://backend-i2v9.onrender.com/api/v1/feedback';
   
   const [showForm, setShowForm] = useState(false);
   const [editingFeedback, setEditingFeedback] = useState(null);

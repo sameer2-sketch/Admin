@@ -14,7 +14,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Orders = () => {
-  let apiUrl = 'https://tasteflowbackend.onrender.com/api/v1/orders';
+  let apiUrl = 'https://backend-i2v9.onrender.com/api/v1/orders';
   const { updateOrderStatus } = useAppContext();
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [selectedReOrder, setSelectedReOrder] = useState(null);
@@ -200,7 +200,7 @@ const Orders = () => {
     payload.from = 'admin';
     setIsLoading(true);
      try {
-        const res = await fetch('https://tasteflowbackend.onrender.com/api/v1/orders/addOrder', {
+        const res = await fetch('https://backend-i2v9.onrender.com/api/v1/orders/addOrder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -222,7 +222,7 @@ const Orders = () => {
   const createOrderCafe = async(linkId) => {
     setIsLoading(true);
     try {
-      const res = await fetch(`https://tasteflowbackend.onrender.com/api/v1/orders/check-payment/${linkId}`);
+      const res = await fetch(`https://backend-i2v9.onrender.com/api/v1/orders/check-payment/${linkId}`);
       const data = await res.json();
       if (res.ok) {
         if(data?.paymentStatus === 'PAID') {
@@ -273,7 +273,7 @@ const Orders = () => {
         from: 'admin',
         id: id
       }
-      const res = await fetch('https://tasteflowbackend.onrender.com/api/v1/orders/handle-payment', {
+      const res = await fetch('https://backend-i2v9.onrender.com/api/v1/orders/handle-payment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

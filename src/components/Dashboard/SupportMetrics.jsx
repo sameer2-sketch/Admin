@@ -6,41 +6,41 @@ import { Clock, Users, AlertTriangle, CheckCircle, TrendingDown } from 'lucide-r
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const SupportMetrics = ({ tickets }) => {
+const SupportMetrics = ({ tickets = [] }) => {
   // Calculate metrics
-  const statusCounts = tickets.reduce((acc, ticket) => {
-    acc[ticket.status] = (acc[ticket.status] || 0) + 1;
+  const statusCounts = tickets?.reduce((acc, ticket) => {
+    acc[ticket?.status] = (acc[ticket?.status] || 0) + 1;
     return acc;
-  }, {});
+  }, {}) || {};
 
-  const priorityCounts = tickets.reduce((acc, ticket) => {
-    acc[ticket.priority] = (acc[ticket.priority] || 0) + 1;
+  const priorityCounts = tickets?.reduce((acc, ticket) => {
+    acc[ticket?.priority] = (acc[ticket?.priority] || 0) + 1;
     return acc;
-  }, {});
+  }, {}) || {};
 
-  const problemTypeCounts = tickets.reduce((acc, ticket) => {
-    acc[ticket.problemType] = (acc[ticket.problemType] || 0) + 1;
+  const problemTypeCounts = tickets?.reduce((acc, ticket) => {
+    acc[ticket?.problemType] = (acc[ticket?.problemType] || 0) + 1;
     return acc;
-  }, {});
+  }, {}) || {};
 
   // Calculate response metrics
-  const openTickets = tickets.filter(t => t.status === 'open').length;
-  const resolvedTickets = tickets.filter(t => t.status === 'resolved').length;
-  const urgentTickets = tickets.filter(t => t.priority === 'urgent').length;
-  const pendingTickets = tickets.filter(t => t.priority === 'pending').length;
-  const resolutionRate = tickets.length > 0 ? (resolvedTickets / tickets.length) * 100 : 0;
+  const openTickets = tickets?.filter(t => t?.status === 'open').length || 0;
+  const resolvedTickets = tickets?.filter(t => t?.status === 'resolved').length || 0;
+  const urgentTickets = tickets?.filter(t => t?.priority === 'urgent').length || 0;
+  const pendingTickets = tickets?.filter(t => t?.priority === 'pending').length || 0;
+  const resolutionRate = (tickets?.length || 0) > 0 ? (resolvedTickets / (tickets?.length || 1)) * 100 : 0;
 
   // Calculate customer satisfaction (mock data based on resolution rate)
   const customerSatisfaction = Math.min(95, Math.max(60, resolutionRate + 20));
 
   const statusData = {
-    labels: Object.keys(statusCounts).map(status => 
+    labels: Object.keys(statusCounts || {}).map(status => 
       status === 'in-progress' ? 'In Progress' : 
-      status.charAt(0).toUpperCase() + status.slice(1)
+      status?.charAt(0)?.toUpperCase() + status?.slice(1)
     ),
     datasets: [
       {
-        data: Object.values(statusCounts),
+        data: Object.values(statusCounts || {}),
         backgroundColor: [
           '#ef4444', // red for open
           '#f59e0b', // amber for in-progress
@@ -54,12 +54,12 @@ const SupportMetrics = ({ tickets }) => {
   };
 
   const priorityData = {
-    labels: Object.keys(priorityCounts).map(priority => 
-      priority.charAt(0).toUpperCase() + priority.slice(1)
+    labels: Object.keys(priorityCounts || {}).map(priority => 
+      priority?.charAt(0)?.toUpperCase() + priority?.slice(1)
     ),
     datasets: [
       {
-        data: Object.values(priorityCounts),
+        data: Object.values(priorityCounts || {}),
         backgroundColor: [
           '#dc2626', // red for urgent
           '#ea580c', // orange for high
@@ -99,7 +99,7 @@ const SupportMetrics = ({ tickets }) => {
             <div className="flex items-center justify-center mb-2">
               <Users size={20} className="text-indigo-600" />
             </div>
-            <p className="text-lg font-bold text-indigo-600">{tickets.length}</p>
+            <p className="text-lg font-bold text-indigo-600">{tickets?.length || 0}</p>
             <p className="text-xs text-gray-600">Total Tickets</p>
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm text-center">
@@ -120,7 +120,7 @@ const SupportMetrics = ({ tickets }) => {
             <div className="flex items-center justify-center mb-2">
               <CheckCircle size={20} className="text-green-600" />
             </div>
-            <p className="text-lg font-bold text-green-600">{resolutionRate.toFixed(1)}%</p>
+            <p className="text-lg font-bold text-green-600">{(resolutionRate || 0).toFixed(1)}%</p>
             <p className="text-xs text-gray-600">Resolution Rate</p>
           </div>
         </div>
@@ -150,10 +150,10 @@ const SupportMetrics = ({ tickets }) => {
               Priority Distribution
             </h4>
             <div className="space-y-2">
-              {Object.entries(priorityCounts)
-                .sort(([,a], [,b]) => b - a)
+              {Object.entries(priorityCounts || {})
+                .sort(([,a], [,b]) => (b || 0) - (a || 0))
                 .map(([priority, count]) => {
-                  const percentage = tickets.length > 0 ? (count / tickets.length) * 100 : 0;
+                  const percentage = (tickets?.length || 0) > 0 ? ((count || 0) / (tickets?.length || 1)) * 100 : 0;
                   const colorClass = priority === 'urgent' ? 'bg-red-500' :
                                    priority === 'high' ? 'bg-orange-500' :
                                    priority === 'medium' ? 'bg-blue-500' : 'bg-gray-500';
@@ -162,11 +162,11 @@ const SupportMetrics = ({ tickets }) => {
                     <div key={priority} className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
                         <div className={`w-3 h-3 rounded-full ${colorClass}`} />
-                        <span className="text-sm text-gray-600 capitalize">{priority}</span>
+                        <span className="text-sm text-gray-600 capitalize">{priority || 'unknown'}</span>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <span className="text-sm font-medium text-gray-900">{count}</span>
-                        <span className="text-xs text-gray-500">({percentage.toFixed(0)}%)</span>
+                        <span className="text-sm font-medium text-gray-900">{count || 0}</span>
+                        <span className="text-xs text-gray-500">({(percentage || 0).toFixed(0)}%)</span>
                       </div>
                     </div>
                   );
@@ -176,7 +176,7 @@ const SupportMetrics = ({ tickets }) => {
         </div>
 
         {/* Charts */}
-        {tickets.length > 0 ? (
+        {(tickets?.length || 0) > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white p-4 rounded-lg shadow-sm">
               <h4 className="text-sm font-medium text-gray-700 mb-3 text-center">Status Distribution</h4>
@@ -199,28 +199,28 @@ const SupportMetrics = ({ tickets }) => {
         )}
 
         {/* Problem Types */}
-        {Object.keys(problemTypeCounts).length > 0 && (
+        {Object.keys(problemTypeCounts || {}).length > 0 && (
           <div className="bg-white p-4 rounded-lg shadow-sm">
             <h4 className="text-sm font-medium text-gray-700 mb-3">Common Issues</h4>
             <div className="space-y-2">
-              {Object.entries(problemTypeCounts)
-                .sort(([,a], [,b]) => b - a)
+              {Object.entries(problemTypeCounts || {})
+                .sort(([,a], [,b]) => (b || 0) - (a || 0))
                 .map(([type, count]) => {
-                  const percentage = tickets.length > 0 ? (count / tickets.length) * 100 : 0;
+                  const percentage = (tickets?.length || 0) > 0 ? ((count || 0) / (tickets?.length || 1)) * 100 : 0;
                   
                   return (
                     <div key={type} className="flex items-center justify-between">
                       <span className="text-sm text-gray-600 capitalize">
-                        {type.replace('-', ' ')}
+                        {type?.replace('-', ' ') || 'unknown'}
                       </span>
                       <div className="flex items-center space-x-2">
                         <div className="w-20 bg-gray-200 rounded-full h-2">
                           <div 
                             className="bg-indigo-500 h-2 rounded-full transition-all duration-300"
-                            style={{ width: `${percentage}%` }}
+                            style={{ width: `${percentage || 0}%` }}
                           />
                         </div>
-                        <span className="text-sm font-medium text-gray-900 w-8">{count}</span>
+                        <span className="text-sm font-medium text-gray-900 w-8">{count || 0}</span>
                       </div>
                     </div>
                   );

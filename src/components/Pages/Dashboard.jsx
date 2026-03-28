@@ -64,7 +64,7 @@ const Dashboard = () => {
   const getFoodItems = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`https://tasteflowbackend.onrender.com/api/v1/food/getFoodItems`);
+      const res = await fetch(`https://backend-i2v9.onrender.com/api/v1/food/getFoodItems`);
       const data = await res.json();
       setFoodItems(data?.foodList);
       const availableItems = data?.foodList?.filter(item => item.available)?.length;
@@ -80,7 +80,7 @@ const Dashboard = () => {
   const getOrders = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`https://tasteflowbackend.onrender.com/api/v1/orders/getOrders`);
+      const res = await fetch(`https://backend-i2v9.onrender.com/api/v1/orders/getOrders`);
       const data = await res.json();
       setOrders(data?.orderList);
       const totalOrders = data?.orderList?.length;
@@ -116,7 +116,7 @@ const Dashboard = () => {
   const getSupports = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`https://tasteflowbackend.onrender.com/api/v1/support/getSupport`);
+      const res = await fetch(`https://backend-i2v9.onrender.com/api/v1/support/getSupport`);
       const data = await res.json();
       setSupportTickets(data?.supportList);
       const urgentTickets = data?.supportList.filter(ticket =>
@@ -137,7 +137,7 @@ const Dashboard = () => {
   const getFeedbacks = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`https://tasteflowbackend.onrender.com/api/v1/feedback/getFeedbacks`);
+      const res = await fetch(`https://backend-i2v9.onrender.com/api/v1/feedback/getFeedbacks`);
       const data = await res.json();
       setCustomerFeedbacks(data?.feedbackList);
       const totalFeedbacks = data?.feedbackList.length;

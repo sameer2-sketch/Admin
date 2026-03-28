@@ -5,9 +5,10 @@ import { OrderStatusBadge } from '../ui/Badge';
 import { format } from 'date-fns';
 import Button from '../ui/Button';
 
-const RecentOrders = ({ orders }) => {
+const RecentOrders = ({ orders = [] }) => {
 
   function convertSecondsToDate(seconds) {
+    if (!seconds && seconds !== 0) return 'N/A';
     const milliseconds = seconds * 1000;
     const date = new Date(milliseconds);
     return date.toDateString();
@@ -15,8 +16,8 @@ const RecentOrders = ({ orders }) => {
 
 
   const navigate = useNavigate();
-  const sortedOrders = [...orders]
-    .sort((a, b) => new Date(convertSecondsToDate(b.createdAt._seconds)).getTime() - new Date(convertSecondsToDate(a.createdAt._seconds)).getTime())
+  const sortedOrders = [...(orders || [])]
+    .sort((a, b) => new Date(convertSecondsToDate(b?.createdAt?._seconds)).getTime() - new Date(convertSecondsToDate(a?.createdAt?._seconds)).getTime())
     .slice(0, 5);
   
   return (
@@ -57,32 +58,32 @@ const RecentOrders = ({ orders }) => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {sortedOrders.map((order) => (
-              <tr key={order.id} className="hover:bg-gray-50">
+            {sortedOrders?.map((order) => (
+              <tr key={order?.id} className="hover:bg-gray-50">
                 <td className="px-3 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">{order.customerName}</div>
-                  <div className="text-sm text-gray-500">Table {order.tableNumber}</div>
+                  <div className="text-sm font-medium text-gray-900">{order?.customerName || 'Unknown'}</div>
+                  <div className="text-sm text-gray-500">Table {order?.tableNumber || 'N/A'}</div>
                 </td>
                 <td className="px-3 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">
-                    {order.items.length} {order.items.length === 1 ? 'item' : 'items'}
+                    {(order?.items?.length || 0)} {(order?.items?.length || 0) === 1 ? 'item' : 'items'}
                   </div>
                 </td>
                 <td className="px-3 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">${order.totalAmount.toFixed(2)}</div>
+                  <div className="text-sm text-gray-900">${(order?.totalAmount || 0).toFixed(2)}</div>
                 </td>
                 <td className="px-3 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">
-                    {convertSecondsToDate(order.createdAt._seconds)}
+                    {convertSecondsToDate(order?.createdAt?._seconds)}
                   </div>
                 </td>
                 <td className="px-3 py-4 whitespace-nowrap">
-                  <OrderStatusBadge status={order.status} />
+                  <OrderStatusBadge status={order?.status} />
                 </td>
               </tr>
             ))}
             
-            {sortedOrders.length === 0 && (
+            {(sortedOrders?.length || 0) === 0 && (
               <tr>
                 <td colSpan={5} className="px-3 py-4 text-sm text-gray-500 text-center">
                   No recent orders

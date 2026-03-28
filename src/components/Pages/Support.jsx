@@ -29,7 +29,7 @@ const Support = () => {
   const [successModal, setSuccessModal] = useState({ isOpen: false, title: '', message: '' });
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, item: null });
   
-  let apiUrl = 'https://tasteflowbackend.onrender.com/api/v1/support';
+  let apiUrl = 'https://backend-i2v9.onrender.com/api/v1/support';
   
   const handleAddNew = () => {
     setEditingTicket(null);

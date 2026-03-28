@@ -6,19 +6,19 @@ import { Clock, CheckCircle, AlertCircle, XCircle, Package } from 'lucide-react'
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const OrderStatusDistribution = ({ orders }) => {
-  const statusCounts = orders.reduce((acc, order) => {
-    acc[order.status] = (acc[order.status] || 0) + 1;
+const OrderStatusDistribution = ({ orders = [] }) => {
+  const statusCounts = orders?.reduce((acc, order) => {
+    acc[order?.status] = (acc[order?.status] || 0) + 1;
     return acc;
-  }, {});
+  }, {}) || {};
 
   const statusData = {
-    labels: Object.keys(statusCounts).map(status => 
-      status.charAt(0).toUpperCase() + status.slice(1)
+    labels: Object.keys(statusCounts || {}).map(status => 
+      status?.charAt(0)?.toUpperCase() + status?.slice(1)
     ),
     datasets: [
       {
-        data: Object.values(statusCounts),
+        data: Object.values(statusCounts || {}),
         backgroundColor: [
           '#f59e0b', // amber for pending
           '#3b82f6', // blue for preparing
@@ -47,6 +47,7 @@ const OrderStatusDistribution = ({ orders }) => {
   };
 
   const getStatusIcon = (status) => {
+    if (!status) return <Clock size={20} className="text-gray-600" />;
     switch (status) {
       case 'pending': return <Clock size={20} className="text-amber-600" />;
       case 'preparing': return <Package size={20} className="text-blue-600" />;
@@ -58,6 +59,7 @@ const OrderStatusDistribution = ({ orders }) => {
   };
 
   const getStatusColor = (status) => {
+    if (!status) return 'text-gray-600';
     switch (status) {
       case 'pending': return 'text-amber-600';
       case 'preparing': return 'text-blue-600';
@@ -76,7 +78,7 @@ const OrderStatusDistribution = ({ orders }) => {
     >
       <div className="space-y-6">
         <div className="grid grid-cols-2 gap-3">
-          {Object.entries(statusCounts).map(([status, count]) => (
+          {Object.entries(statusCounts || {}).map(([status, count]) => (
             <div key={status} className="bg-white p-3 rounded-lg shadow-sm">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
@@ -94,7 +96,7 @@ const OrderStatusDistribution = ({ orders }) => {
         </div>
 
         {/* Pie Chart */}
-        {orders.length > 0 ? (
+        {orders?.length > 0 ? (
           <div className="bg-white p-4 rounded-lg shadow-sm">
             <div className="h-64">
               <Pie data={statusData} options={chartOptions} />
@@ -113,13 +115,13 @@ const OrderStatusDistribution = ({ orders }) => {
           <div className="grid grid-cols-2 gap-4 text-center">
             <div>
               <p className="text-2xl font-bold text-blue-600">
-                {((statusCounts.delivered || 0) / Math.max(orders.length, 1) * 100).toFixed(1)}%
+                {((statusCounts?.delivered || 0) / Math.max(orders?.length || 0, 1) * 100).toFixed(1)}%
               </p>
               <p className="text-xs text-gray-600">Completion Rate</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-amber-600">
-                {(statusCounts.pending || 0) + (statusCounts.preparing || 0)}
+                {(statusCounts?.pending || 0) + (statusCounts?.preparing || 0)}
               </p>
               <p className="text-xs text-gray-600">Active Orders</p>
             </div>
