@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import Card from '../ui/Card';
 import { SupportStatusBadge, SupportPriorityBadge } from '../ui/Badge';
 import Button from '../ui/Button';
-import { Eye, Trash2, Edit, MessageSquare } from 'lucide-react';
-import { format } from 'date-fns';
+import { Eye, Trash2, Edit } from 'lucide-react';
 import Select from '../ui/Select';
 
 const SupportTicketList = ({
@@ -187,7 +186,7 @@ const SupportTicketList = ({
               </tr>
             ))}
             
-            {supportError?.length > 0 || sortedTickets.length === 0 && (
+            {((supportError?.length > 0) || (sortedTickets?.length === 0)) && (
               <tr>
                 <td colSpan={6} className="px-4 py-4 text-sm text-gray-500 text-center">
                   {supportError?.length > 0 ? supportError :'No support tickets found'}

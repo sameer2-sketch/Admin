@@ -61,11 +61,11 @@ const Food = () => {
 
   useEffect(() => {
     foodItems && handleFilters(foodItems)
-  }, [categoryFilter])
+  }, [categoryFilter, foodItems, handleFilters])
   
   useEffect(() => {
     foodItems && handleFilters(foodItems)
-  }, [availabilityFilter])
+  }, [availabilityFilter, foodItems, handleFilters])
 
   const handleFilters = (data) => {
     const filteredItems = data?.filter(item => {
@@ -86,6 +86,7 @@ const Food = () => {
     setFilteredItems(filteredItems)
   }
   
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     getFoodItems();
   }, [])
