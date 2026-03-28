@@ -1,7 +1,7 @@
 import React from 'react';
 import { SupportStatusBadge, SupportPriorityBadge } from '../ui/Badge';
 import Button from '../ui/Button';
-import { X, User, Mail, Hash, AlertTriangle, Clock } from 'lucide-react';
+import { X, User, Mail, Hash, AlertTriangle, Clock, MessageSquare } from 'lucide-react';
 
 const SupportTicketDetails = ({
   ticket,
