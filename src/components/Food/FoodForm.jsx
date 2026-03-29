@@ -50,7 +50,7 @@ const FoodForm = ({ initialData, onSubmit, onCancel }) => {
     'Sad',
     'Excited',
     'Stressed',
-    "Indian",
+    "Romantic",
     "salad",
     "soup"
   ];

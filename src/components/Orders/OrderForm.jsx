@@ -176,7 +176,11 @@ const OrderForm = ({
     }
   };
 
-  const totalAmount = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const discount = subtotal * 0.1; // 10% discount
+  const taxableAmount = subtotal - discount;
+  const tax = taxableAmount * 0.08; // 8% tax
+  const totalAmount = taxableAmount + tax;
   return (
     <>
     {(isLoading) && <Loader showLoader={(isLoading)} />}
@@ -325,9 +329,23 @@ const OrderForm = ({
           </div> 
           
           <div className="mt-4 p-3 bg-gray-50 rounded-md">
-            <div className="flex justify-between items-center">
-              <span className="text-lg font-medium text-gray-900">Total Amount:</span>
-              <span className="text-xl font-bold text-amber-700">₹{totalAmount.toFixed(2)}</span>
+            <div className="space-y-2 mb-3">
+              <div className="flex justify-between items-center text-gray-700">
+                <span className="text-sm">Subtotal:</span>
+                <span className="text-sm font-medium">₹{subtotal.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between items-center text-green-600">
+                <span className="text-sm">Discount (10%):</span>
+                <span className="text-sm font-medium">-₹{discount.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between items-center text-blue-600">
+                <span className="text-sm">Tax (8%):</span>
+                <span className="text-sm font-medium">+₹{tax.toFixed(2)}</span>
+              </div>
+              <div className="border-t border-gray-300 pt-2 flex justify-between items-center">
+                <span className="text-lg font-medium text-gray-900">Total Amount:</span>
+                <span className="text-xl font-bold text-amber-700">₹{totalAmount.toFixed(2)}</span>
+              </div>
             </div>
           </div>
         </div>
