@@ -54,7 +54,7 @@ const Sidebar = () => {
       <div className="p-5 border-b border-gray-200">
         <div className="flex items-center space-x-2">
           <img src={logo} style={{ height: 50, width: 50 }}/>
-          <h1 className="text-xl font-bold text-gray-800">MoodSync Admin</h1>
+          <h1 className="text-xl font-bold text-gray-800">MoodNest Admin</h1>
         </div>
       </div>
       

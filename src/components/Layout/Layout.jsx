@@ -25,7 +25,7 @@ const Layout = ({ children }) => {
       case '/feedback':
         return 'Customer Feedback';
       default:
-        return 'MoodSync Admin';
+        return 'MoodNest Admin';
     }
   };
 

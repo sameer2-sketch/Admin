@@ -169,7 +169,7 @@ const Dashboard = () => {
       <div className="bg-gradient-to-r from-amber-600 to-orange-600 rounded-xl p-6 text-white">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold mb-2">Welcome to MoodSync Admin Dashboard</h1>
+            <h1 className="text-2xl font-bold mb-2">Welcome to MoodNest Admin Dashboard</h1>
             <p className="text-amber-100">
               Here's what's happening at your café today
             </p>

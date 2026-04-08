@@ -113,7 +113,7 @@ const Signup = () => {
             Create Account
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Join our MoodSync admin platform
+            Join our MoodNest admin platform
           </p>
         </div>
 
