@@ -70,7 +70,7 @@ const Login = () => {
             Welcome Back
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Sign in to your MoodNest Admin account
+            Sign in to your MoodNest Admin account!
           </p>
         </div>
 
